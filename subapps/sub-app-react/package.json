@@ -2,20 +2,18 @@
   "private": true,
   "author": "Daniel Yin <iamdanielyin@gmail.com>",
   "scripts": {
-    "dev": "max dev",
-    "build": "max build",
-    "postinstall": "max setup",
-    "setup": "max setup",
+    "dev": "PORT=7070 umi dev",
+    "build": "umi build",
+    "postinstall": "umi setup",
+    "setup": "umi setup",
     "start": "npm run dev"
   },
   "dependencies": {
-    "react-activation": "^0.12.4",
-    "wujie-react": "^1.0.18"
+    "umi": "^4.0.73"
   },
   "devDependencies": {
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
-    "@umijs/max": "^4.0.73",
     "typescript": "^5.0.3"
   }
 }
