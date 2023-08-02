@@ -8,6 +8,5 @@
 /dist
 .swc
 .idea
-pnpm-lock.yaml
 yarn.lock
 package-lock.json
