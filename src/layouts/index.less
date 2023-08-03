@@ -1,10 +1,20 @@
-.navs {
-  ul {
-    padding: 0;
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  .left {
+    width: 120px;
+    height: 100%;
+    padding-left: 20px;
     list-style: none;
-    display: flex;
+    li {
+      margin-top: 1em;
+      text-align: left;
+    }
   }
-  li {
-    margin-right: 1em;
+  .right {
+    flex: 1;
   }
 }

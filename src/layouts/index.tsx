@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from '@umijs/max';
 import { AliveScope, useAliveController } from 'react-activation';
 
-const { bus } = WujieReact;
+const { bus, preloadApp, setupApp } = WujieReact;
 
 export default function Layout() {
     const { drop, dropScope, clear, getCachingNodes } = useAliveController();
@@ -28,6 +28,11 @@ export default function Layout() {
     const location = useLocation();
     useEffect(() => {
         if (menu?.subAppCode) {
+            // preloadApp({
+            //     name: menu.subAppCode,
+            //     url: menu.subAppHost,
+            //     exec: true
+            // } as any)
             console.log('【main】通知子应用路由变更...', `${ menu.subAppCode }:router-change`, menu.url);
             WujieReact.bus.$emit(`${ menu.subAppCode }:router-change`, menu.url);
         }
@@ -43,18 +48,19 @@ export default function Layout() {
     return (
         <>
             { loading ? <Spin/> : (
-                <div className={ styles.navs }>
-                    <div></div>
-                    <ul>
+                <div className={ styles.container }>
+                    <ul className={styles.left}>
                         { initialState?.menus.map((item: any) => (
                             <li key={ item.id } onClick={ () => handleLink(item) } style={ { color: '#F00', cursor: 'pointer', textDecoration: 'underline' } }>
                                 { item.name }
                             </li>
                         )) }
                     </ul>
-                    <AliveScope>
-                        <Outlet/>
-                    </AliveScope>
+                    <div className={styles.right}>
+                        <AliveScope>
+                            <Outlet/>
+                        </AliveScope>
+                    </div>
                 </div>
             ) }
         </>

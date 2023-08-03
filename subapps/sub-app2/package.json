@@ -2,7 +2,7 @@
   "private": true,
   "author": "Daniel Yin <iamdanielyin@gmail.com>",
   "scripts": {
-    "dev": "PORT=7070 umi dev",
+    "dev": "PORT=7072 umi dev",
     "build": "umi build",
     "postinstall": "umi setup",
     "setup": "umi setup",

@@ -3,7 +3,7 @@ import yayJpg from '../assets/yay.jpg';
 export default function HomePage() {
     return (
         <div>
-            <h2>SUB-APP-REACT</h2>
+            <h2>APP2-HOME</h2>
             <div>
                 { new Date(+new Date() + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '') }
             </div>
