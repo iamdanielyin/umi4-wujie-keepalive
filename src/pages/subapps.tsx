@@ -34,19 +34,13 @@ function withWujie(subAppCode: string, subAppHost: string, url: string) {
 
 
  function SubAppsPage() {
+    const location = useLocation();
     const [now] = useState(
         new Date(+new Date() + 8 * 3600 * 1000)
             .toISOString()
             .replace(/T/g, ' ')
             .replace(/\.[\d]{3}Z/, '')
     );
-    // useActivate(() => {
-    //     console.log('subapps: didActivate');
-    // });
-    //
-    // useUnactivate(() => {
-    //     console.log('subapps: willUnactivate');
-    // });
     const params: any = useParams();
     const { initialState } = useModel('@@initialState');
     const menu = initialState?.menuMap[params.id];
@@ -59,18 +53,11 @@ function withWujie(subAppCode: string, subAppHost: string, url: string) {
      const WJ = withWujie(menu.subAppCode, menu.subAppHost, menu.url);
     return (
         <>
-            <div>{ now }</div>
+            <div>1111{ now }</div>
             <WJ />
             {/*<iframe src={fullUrl} style={{ width: '100vw', height: '80vh', backgroundColor: 'red' }} />*/}
         </>
     );
 }
+
 export default SubAppsPage
-// export default () => {
-//     const location = useLocation();
-//     return (
-//         <KeepAlive name={location.pathname} saveScrollPosition="screen">
-//             <SubAppsPage />
-//         </KeepAlive>
-//     )
-// };

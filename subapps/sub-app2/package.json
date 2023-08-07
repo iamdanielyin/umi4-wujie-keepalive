@@ -9,6 +9,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "react-activation": "^0.12.4",
     "umi": "^4.0.73"
   },
   "devDependencies": {

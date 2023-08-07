@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'umi';
 import yayJpg from '../assets/yay.jpg';
 import KeepAlive, { useActivate, useUnactivate } from 'react-activation';
+import withKeepAlive from '@/components/withKeepAlive';
 
 function HomePage() {
     const [now] = useState(
@@ -32,11 +33,4 @@ function HomePage() {
 }
 
 
-export default () => {
-    const location = useLocation();
-    return (
-        <KeepAlive name={location.pathname} saveScrollPosition="screen">
-            <HomePage />
-        </KeepAlive>
-    )
-};
+export default HomePage;// withKeepAlive(HomePage)

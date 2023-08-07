@@ -1,6 +1,7 @@
 import KeepAlive, { useActivate, useUnactivate } from 'react-activation';
 import { useState } from 'react';
-import { useLocation } from '@@/exports';
+import { useLocation } from 'umi';
+import withKeepAlive from '@/components/withKeepAlive';
 
 const DocsPage = () => {
     const [now] = useState(
@@ -24,11 +25,12 @@ const DocsPage = () => {
     );
 };
 
-export default () => {
-    const location = useLocation();
-    return (
-        <KeepAlive name={location.pathname} saveScrollPosition="screen">
-            <DocsPage />
-        </KeepAlive>
-    )
-};
+export default DocsPage;//withKeepAlive(DocsPage)
+// () => {
+//     const location = useLocation();
+//     return (
+//         <KeepAlive name={location.pathname} saveScrollPosition={true}>
+//             <DocsPage />
+//         </KeepAlive>
+//     )
+// }

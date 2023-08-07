@@ -1,4 +1,7 @@
+import React from 'react';
 import { history } from 'umi';
+import { AliveScope } from 'react-activation';
+
 const appCode = 'sub-app2'
 console.log(`加载${appCode}完成`)
 // @ts-ignore
@@ -12,4 +15,8 @@ export function render(oldRender: Function) {
     console.log('history.location.pathname...', history.location.pathname)
     // @ts-ignore
     window.$wujie?.bus.$emit(`${appCode}:rendered`)
+}
+
+export function rootContainer(container: any) {
+    return React.createElement(AliveScope, null, container);
 }

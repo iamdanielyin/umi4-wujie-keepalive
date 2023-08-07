@@ -1,5 +1,7 @@
-import WujieReact from 'wujie-react';
+import React from 'react';
 import { request } from '@umijs/max';
+import { AliveScope } from 'react-activation';
+import WujieReact from 'wujie-react';
 
 export async function getInitialState() {
     const menus = await request('/api/menus')
@@ -16,4 +18,8 @@ export async function getInitialState() {
         }
     }
     return { menus, menuMap };
+}
+
+export function rootContainer(container: any) {
+    return React.createElement(AliveScope, null, container);
 }

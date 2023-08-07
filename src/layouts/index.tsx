@@ -1,29 +1,22 @@
 import { Link, Outlet, history } from 'umi';
 import { useModel } from '@umijs/max';
-import { Spin } from 'antd';
+import { Spin, Tag } from 'antd';
 import WujieReact from 'wujie-react';
 import styles from './index.less';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from '@umijs/max';
-import { AliveScope, useAliveController } from 'react-activation';
+import KeepAlive, { useAliveController } from 'react-activation';
 
 const { bus, preloadApp, setupApp } = WujieReact;
 
 export default function Layout() {
+    const [customTabs, setCustomTabs] = useState<any>([])
     const { drop, dropScope, clear, getCachingNodes } = useAliveController();
+    const cachingNodes = getCachingNodes();
+    console.log('cachingNodes...', cachingNodes);
 
     const params: any = useParams();
     const { initialState, loading } = useModel('@@initialState');
-    // console.log(initialState);
-    // bus.$on("sub-route-change", (name:string, path:string) => {
-    //     console.log(name, path)
-    //     const mainName = `${name}-sub`;
-    //     const mainPath = `/${name}-sub${path}`;
-    //     const currentPath = window.location.hash.replace("#", "")
-    //     if(currentPath.includes(mainName) && currentPath !== mainPath) {
-    //         // navigation(mainPath);
-    //     }
-    // });
     const menu = initialState?.menuMap[params.id];
     const location = useLocation();
     useEffect(() => {
@@ -39,6 +32,10 @@ export default function Layout() {
     }, [location]);
 
     const handleLink = (item: any) => {
+        if (customTabs.findIndex((each:any) => item.id === each.id) < 0) {
+            customTabs.push(item)
+            setCustomTabs(customTabs)
+        }
         if (item.subAppHost) {
             history.push(`/subapps/${ item.id }`);
         } else {
@@ -51,18 +48,53 @@ export default function Layout() {
                 <div className={ styles.container }>
                     <ul className={styles.left}>
                         { initialState?.menus.map((item: any) => (
-                            <li key={ item.id } onClick={ () => handleLink(item) } style={ { color: '#F00', cursor: 'pointer', textDecoration: 'underline' } }>
+                            <li
+                                key={ item.id }
+                                style={ { color: '#F00', cursor: 'pointer', textDecoration: 'underline' } }
+                                onClick={ () => {
+                                    handleLink(item)
+                                } }
+                            >
                                 { item.name }
                             </li>
                         )) }
                     </ul>
                     <div className={styles.right}>
-                        <AliveScope>
-                            <Outlet/>
-                        </AliveScope>
+                        <div>
+                            {customTabs.map((item:any) => {
+                                return (
+                                    <Tag
+                                        key={ item.name }
+                                        closable={false}
+                                        onClick={() => {
+                                            dropScope(item.name)
+                                            const idx = customTabs.findIndex((each:any) => item.id === each.id)
+                                            customTabs.splice(idx, 1)
+                                            setCustomTabs(customTabs)
+                                        }}
+                                    >
+                                        { item.name }
+                                    </Tag>
+                                );
+                            })}
+                        </div>
+                        <div>
+                            {/*<Outlet/>*/}
+                            <KeepAlive name={location.pathname} cacheKey={location.pathname} saveScrollPosition="screen">
+                                <Outlet/>
+                            </KeepAlive>
+                        </div>
                     </div>
                 </div>
             ) }
         </>
     );
+}
+
+const withKeepAlive = (location:any, children:any) => {
+    return () => (
+        <KeepAlive name={location.pathname} saveScrollPosition={true}>
+            {children}
+        </KeepAlive>
+    )
 }

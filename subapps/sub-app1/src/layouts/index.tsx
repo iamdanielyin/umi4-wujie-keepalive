@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 import { Link, Outlet, history, useLocation } from 'umi';
 import styles from './index.less';
-
-const appCode = 'sub-app1'
+import KeepAlive, { useAliveController } from 'react-activation';
 
 export default function Layout() {
+    const location = useLocation();
+    const { drop, dropScope, clear, getCachingNodes } = useAliveController();
+    const cachingNodes = getCachingNodes();
+    console.log('sub...cachingNodes...', cachingNodes);
     return (
         <div className={ styles.navs }>
             <ul>
@@ -18,7 +21,9 @@ export default function Layout() {
                     <a href="https://github.com/umijs/umi">[APP1]Github</a>
                 </li>
             </ul>
-            <Outlet/>
+            <KeepAlive name={location.pathname} cacheKey={location.pathname} saveScrollPosition="screen">
+                <Outlet/>
+            </KeepAlive>
         </div>
     );
 }
