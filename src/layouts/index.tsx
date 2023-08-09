@@ -80,9 +80,13 @@ export default function Layout() {
                         </div>
                         <div>
                             {/*<Outlet/>*/}
-                            <KeepAlive name={location.pathname} cacheKey={location.pathname} saveScrollPosition="screen">
+                            {location.pathname.startsWith('/subapps/') ? (
                                 <Outlet/>
-                            </KeepAlive>
+                            ) : (
+                                <KeepAlive name={location.pathname} cacheKey={location.pathname} saveScrollPosition="screen">
+                                    <Outlet/>
+                                </KeepAlive>
+                            )}
                         </div>
                     </div>
                 </div>
